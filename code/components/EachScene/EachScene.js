@@ -9,9 +9,6 @@ const Scenes = ({ data }) => {
 			setWidth(window.innerWidth > 900 ? 720 : 500);
 		}
 	}, []);
-	const increaseID = () => {
-		data.id += 1;
-	};
 
 	return (
 		<div
@@ -35,14 +32,6 @@ const Scenes = ({ data }) => {
 						<hr />
 						<p className="text-white">{data.description}</p>
 					</div>
-				</div>
-				<div className="fixed bottom-4 m-auto items-center justify-center">
-					<button className="text-white text-2xl p-4 border border-2 rounded-lg mx-2 duration-200 ease-linear hover:bg-white hover:text-black">
-						Increase
-					</button>
-					<button className="text-white text-2xl p-4 border border-2 rounded-lg mx-2 duration-200 ease-linear hover:bg-white hover:text-black">
-						Decrease
-					</button>
 				</div>
 			</div>
 		</div>

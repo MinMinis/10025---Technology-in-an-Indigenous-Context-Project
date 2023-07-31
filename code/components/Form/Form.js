@@ -1,14 +1,15 @@
-import { useRef } from "react";
+import { useState } from "react";
 import React from "react";
 import Input from "../Input/Input";
+import InputContainer from "../Input/InputContainer";
 const Form = () => {
-	const fullnameRef = useRef();
-	const emailRef = useRef();
-	const telephoneRef = useRef();
-	const reasonapplyRef = useRef();
-	const locationRef = useRef();
-	const preferJobRef = useRef();
-	const imageRef = useRef();
+	const [fullnameRef, setfullnameRef] = useState();
+	const [emailRef, setemailRef] = useState();
+	const [telephoneRef, settelephoneRef] = useState();
+	const [reasonapplyRef, setreasonapplyRef] = useState();
+	const [locationRef, setlocationRef] = useState();
+	const [preferJobRef, setpreferJobRef] = useState();
+	const [imageRef, setimageRef] = useState(null);
 	function addEmployee(employee) {
 		fetch("https://cos10025-default-rtdb.firebaseio.com/employees.json", {
 			method: "POST",
@@ -22,20 +23,24 @@ const Form = () => {
 	}
 	const handlesubmit = (event) => {
 		event.preventDefault();
-		const inputName = fullnameRef.current.value;
-		const inputEmail = emailRef.current.value;
-		const inputTelephone = telephoneRef.current.value;
-		const inputReason = reasonapplyRef.current.value;
-		const inputLocation = locationRef.current.value;
-		const inputPreferJob = preferJobRef.current.value;
-		const inputImage = imageRef.current.value;
-		fullnameRef.current.value = "";
-		emailRef.current.value = "";
-		telephoneRef.current.value = "";
-		reasonapplyRef.current.value = "";
-		locationRef.current.value = "";
-		preferJobRef.current.value = "";
-		imageRef.current.value = "";
+		const inputName = fullnameRef;
+		const inputEmail = emailRef;
+		const inputTelephone = telephoneRef;
+		const inputReason = reasonapplyRef;
+		const inputLocation = locationRef;
+		const inputPreferJob = preferJobRef;
+		// const formData = new FormData();
+		const inputImage = imageRef;
+		// console.log(imageRef);
+		// formData.append("file", inputImage);
+
+		setfullnameRef("");
+		setemailRef("");
+		settelephoneRef("");
+		setreasonapplyRef("");
+		setlocationRef("");
+		setpreferJobRef("");
+		setimageRef("");
 
 		const registerJob = {
 			name: inputName,
@@ -47,7 +52,8 @@ const Form = () => {
 			reason: inputReason,
 		};
 		console.log(registerJob);
-		addEmployee(registerJob);
+		// console.log(formData);
+		// addEmployee(registerJob);
 	};
 	return (
 		<div>
@@ -57,112 +63,76 @@ const Form = () => {
 				<form className="w-2/4 m-auto" onSubmit={handlesubmit}>
 					<div className="grid lg:grid-cols-2 sm:grid-cols-1 gap-4">
 						{" "}
-						<div className="w-52">
-							<label htmlFor="name" className="p-1 text-center">
-								Full Name
-							</label>
-							<br />
-							<input
-								type="text"
+						<InputContainer>
+							<Input
+								label="Full name"
 								id="name"
-								placeholder="Please input your full name"
-								className="p-1 border rounded-lg w-64"
-								ref={fullnameRef}
-								required
+								placeholder="Please input in your full name"
+								value={fullnameRef}
+								onChange={(e) => setfullnameRef(e.target.value)}
 							/>
-						</div>
-						<div className="w-52">
-							<label htmlFor="email" className="p-1 text-center">
-								Email
-							</label>
-							<br />
-							<input
-								type="text"
+						</InputContainer>
+						<InputContainer>
+							<Input
+								type="email"
+								label="Email"
 								id="email"
-								placeholder="Please input your email"
-								className="p-1 border rounded-lg w-64"
-								ref={emailRef}
-								required
+								placeholder="Please input in your email"
+								value={emailRef}
+								onChange={(e) => setemailRef(e.target.value)}
 							/>
-						</div>
-						<div className="w-52">
-							{" "}
-							<label htmlFor="telephone" className="p-1 text-center">
-								Telephone
-							</label>
-							<br />
-							<input
-								type="text"
-								id="telephone"
-								placeholder="Please input your telephone"
-								className="p-1 border rounded-lg w-64"
-								ref={telephoneRef}
-								required
+						</InputContainer>
+						<InputContainer>
+							<Input
+								type="number"
+								label="Telephone"
+								id="tel"
+								placeholder="Please input in your Telephone"
+								value={telephoneRef}
+								onChange={(e) => settelephoneRef(e.target.value)}
 							/>
-						</div>
-						<div className="w-52">
-							{" "}
-							<label htmlFor="reason" className="p-1 text-center">
-								Reason Apply
-							</label>
-							<br />
-							<input
-								type="text"
-								id="reason"
-								placeholder="Please input your reason"
-								className="p-1 border rounded-lg w-64"
-								ref={reasonapplyRef}
-								required
-							/>
-						</div>
-						<div className="w-52">
-							{" "}
-							<label htmlFor="location" className="p-1 text-center">
-								Location
-							</label>
-							<br />
-							<input
-								type="text"
+						</InputContainer>
+						<InputContainer>
+							<Input
+								label="Location"
 								id="location"
-								placeholder="Please input your location"
-								className="p-1 border rounded-lg w-64"
-								ref={locationRef}
-								required
+								placeholder="Please input in your location"
+								value={locationRef}
+								onChange={(e) => setlocationRef(e.target.value)}
 							/>
-						</div>
-						<div className="w-52">
-							{" "}
-							<label htmlFor="preferjob" className="p-1 text-center">
-								Prefer Job
-							</label>
-							<br />
-							<input
-								type="text"
+						</InputContainer>
+						<InputContainer>
+							<Input
+								label="Prefer Job/Field"
 								id="preferjob"
-								placeholder="Please input your prefer job"
-								className="p-1 border rounded-lg w-64"
-								ref={preferJobRef}
-								required
+								placeholder="Please input in your prefer job"
+								value={preferJobRef}
+								onChange={(e) => setpreferJobRef(e.target.value)}
 							/>
-						</div>
-						<div className="w-52">
-							{" "}
-							<label htmlFor="profileimage" className="p-1 text-center">
-								Profile Image
-							</label>
-							<br />
-							<input
+						</InputContainer>
+						<InputContainer>
+							<Input
 								type="file"
-								id="profileimage"
-								placeholder="Please input your profile image"
-								className="p-1 border rounded-lg w-64"
-								ref={imageRef}
-								required
+								label="Profile Image"
+								id="image"
+								placeholder="Please input in your profile image"
+								value={imageRef}
+								onChange={(e) => (
+									console.log(e.target.files[0]), setimageRef(e.target.value)
+								)}
 							/>
-						</div>
-						<div className="m-auto w-max hover:bg-slate-900 border rounded-lg hover:text-white px-8 py-2">
-							<button>Submit</button>
-						</div>
+						</InputContainer>
+					</div>
+					<div className="w-full mx-4 my-4">
+						<label>Reason Apply</label>
+						<textarea
+							className="border-2 border-black rounded-lg resize-none h-24 w-11/12"
+							placeholder="Please fill in your reason"
+							value={reasonapplyRef}
+							onChange={(e) => setreasonapplyRef(e.target.value)}></textarea>
+						<button className="m-auto my-8 w-max hover:bg-slate-900 border rounded-lg hover:text-white px-8 py-2">
+							Submit
+						</button>
 					</div>
 				</form>
 			</div>
